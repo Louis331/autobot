@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const auth = require('./auth.json')
 var fs = require("fs")
 
 var prefix = '!'
@@ -86,4 +85,4 @@ function writeToFile(){
         console.log('written to file')
     })
 }
-client.login(auth.token)
+client.login(process.env.BOT_TOKEN)
