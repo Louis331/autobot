@@ -85,4 +85,4 @@ function writeToFile(){
         console.log('written to file')
     })
 }
-client.login(process.env.BOT_TOKEN)
+client.login(process.env.BOT_TOKEN) //for bot token
