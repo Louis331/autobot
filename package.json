@@ -1,12 +1,12 @@
 {
     "name": "DC BOT",
     "description": "Example",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "main": "bot.js",
     "scripts": {
       "start": "node bot.js"
     },
     "dependencies": {
-      "discord": "11.4.2"
+      "discord.js": "11.1.0"
     }
   }
