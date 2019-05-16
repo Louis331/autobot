@@ -52,7 +52,7 @@ client.on('ready', () => {
         break
         case prefix +'add joke':
             newJokeList[msg.author] = new Joke()
-            msg.reply('your next message will be the joke set up. What is the set up?')
+            msg.reply('your next message will be the joke set up. What is the set up? Type cancel to stop adding the joke')
         break
         case prefix+'cat picture':
             if ((Math.floor(Math.random() * 2) + 1) === 1){
@@ -75,7 +75,10 @@ client.on('ready', () => {
             if (msg.author in newJokeList){
                 var newJoke = newJokeList[msg.author]
 
-                if (!newJoke.setUp){
+                if(msg.content.toLowerCase() === 'cancel'){
+                    delete newJokeList[msg.author]
+                    msg.reply("joke has been canceled")
+                }else if (!newJoke.setUp){
 
                     newJoke.setUp = msg.content
                     msg.reply('your next message will be the joke punchline. What is the punchline?')
