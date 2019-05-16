@@ -55,11 +55,20 @@ client.on('ready', () => {
             msg.reply('your next message will be the joke set up. What is the set up?')
         break
         case prefix+'cat picture':
-            request('https://api.thecatapi.com/v1/images/search', function (error, response, body){
-                msg.channel.send('Your cat picture',
-                {file: JSON.parse(body)[0]['url'] }
-            )
-        })
+            if ((Math.floor(Math.random() * 2) + 1) === 1){
+                request('https://api.thecatapi.com/v1/images/search', function (error, response, body){
+                    msg.channel.send('Your cat picture',
+                    {file: JSON.parse(body)[0]['url'] }
+                )
+                })
+            }else{
+                request('https://aws.random.cat/meow', function(error, response, body){
+                    console.log(JSON.parse(body))
+                    msg.channel.send('Your cat picture',
+                    {file: JSON.parse(body)['file'] }
+                    )
+                })
+            }
         break
         default:
 
