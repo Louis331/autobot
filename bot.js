@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 var fs = require("fs")
+var request = require('request')
 
 var prefix = '!'
 var jokeList = require('./joke.json')
@@ -53,6 +54,13 @@ client.on('ready', () => {
             newJokeList[msg.author] = new Joke()
             msg.reply('your next message will be the joke set up. What is the set up?')
         break
+        case prefix+'cat picture':
+            request('https://api.thecatapi.com/v1/images/search', function (error, response, body){
+                msg.channel.send('Your cat picture',
+                {file: JSON.parse(body)[0]['url'] }
+            )
+        })
+        break
         default:
 
             if (msg.author in newJokeList){
@@ -69,7 +77,6 @@ client.on('ready', () => {
                     newJoke.addJoke()
                     delete newJokeList[msg.author]
                     msg.reply('joke has been added')
-                    console.log(jokeList[jokeList.length - 1])
                     writeToFile()
 
                 }

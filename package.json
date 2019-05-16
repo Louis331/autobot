@@ -6,12 +6,13 @@
     "engines": {
         "node": "8.11.2",
         "npm": "5.6.0"
-      },
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node bot.js"
+        "start": "node bot.js"
     },
     "dependencies": {
-      "discord.js": "11.4.2"
+        "discord.js": "11.4.2",
+        "request": "^2.88.0"
     }
-  }
+}
