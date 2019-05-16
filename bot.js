@@ -5,21 +5,14 @@ var fs = require("fs")
 var prefix = '!'
 var jokeList = require('./joke.json')
 var newJokeList = {}
+var userTimeList = {}
 
 class Joke {
     constructor(){
         this.setUp = ''
         this.punchLine = ''
     }
-
-    setSetUp(setUp){
-        this.setUp = setUp
-    }
-
-    setPunchLine(punchLine){
-        this.punchLine = punchLine
-    }
-
+    
     addJoke(){
         if (this.setUp && this.punchLine){
             //add joke
@@ -40,34 +33,48 @@ client.on('ready', () => {
     switch(msg.content.toLowerCase()){
         case 'health':
             msg.reply(msg.content)
-            break
+        break
         case prefix + 'joke':
-        var joke = jokeList[random(jokeList.length)]
+            if (! (msg.author in userTimeList) || Date.now() - userTimeList[msg.author] > 30000){
+
+                var joke = jokeList[random(jokeList.length)]
                 msg.channel.send(joke['setup'])
+
                 sleep(5000).then(() =>{ 
                     msg.channel.send(joke['punchline'])
                 })
-                break
+                
+                userTimeList[msg.author] = Date.now()
+            }else{
+                msg.author.send('You can get another joke in ' +  - Math.floor(((Date.now() - userTimeList[msg.author]) - 30000)/1000) + ' seconds')
+            }
+        break
         case prefix +'add joke':
-                newJokeList[msg.author] = new Joke()
-                msg.reply('your next message will be the joke set up. What is the set up?')
-                break
+            newJokeList[msg.author] = new Joke()
+            msg.reply('your next message will be the joke set up. What is the set up?')
+        break
         default:
-                if (msg.author in newJokeList){
-                    var newJoke = newJokeList[msg.author]
-                    if (!newJoke.setUp){
-                        newJoke.setSetUp(msg.content)
-                        msg.reply('your next message will be the joke punchline. What is the punchline?')
-                    }else{
-                        newJoke.setPunchLine(msg.content)
-                        newJoke.addJoke()
-                        delete newJokeList[msg.author]
-                        msg.reply('joke has been added')
-                        console.log(jokeList[jokeList.length - 1])
-                        writeToFile()
-                    }
+
+            if (msg.author in newJokeList){
+                var newJoke = newJokeList[msg.author]
+
+                if (!newJoke.setUp){
+
+                    newJoke.setUp = msg.content
+                    msg.reply('your next message will be the joke punchline. What is the punchline?')
+
+                }else{
+
+                    newJoke.punchLine = msg.content
+                    newJoke.addJoke()
+                    delete newJokeList[msg.author]
+                    msg.reply('joke has been added')
+                    console.log(jokeList[jokeList.length - 1])
+                    writeToFile()
+
                 }
-            break
+            }
+        break
     }
   })
 
@@ -85,4 +92,4 @@ function writeToFile(){
         console.log('written to file')
     })
 }
-client.login(process.env.BOT_TOKEN) //for bot token
+client.login(process.env.BOT_TOKEN)
