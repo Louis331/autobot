@@ -7,6 +7,7 @@ var prefix = '!'
 var jokeList = require('./joke.json')
 var newJokeList = {}
 var userTimeList = {}
+var queue_of_users = []
 
 class Joke {
     constructor(){
@@ -31,69 +32,82 @@ client.on('ready', () => {
 })
 
   client.on('message', msg => {
-    switch(msg.content.toLowerCase()){
-        case 'health':
-            msg.reply(msg.content)
-        break
-        case prefix + 'joke':
-            if (! (msg.author in userTimeList) || Date.now() - userTimeList[msg.author] > 30000){
+    if (msg.channel.id != '598806292156514335'){
+        switch(msg.content.toLowerCase()){
+            case 'health':
+                msg.reply(msg.content)
+            break
+            case prefix + 'joke':
+                if (! (msg.author in userTimeList) || Date.now() - userTimeList[msg.author] > 30000){
 
-                var joke = jokeList[random(jokeList.length)]
-                msg.channel.send(joke['setup'])
+                    var joke = jokeList[random(jokeList.length)]
+                    msg.channel.send(joke['setup'])
 
-                sleep(5000).then(() =>{ 
-                    msg.channel.send(joke['punchline'])
-                })
-                
-                userTimeList[msg.author] = Date.now()
-            }else{
-                msg.author.send('You can get another joke in ' +  - Math.floor(((Date.now() - userTimeList[msg.author]) - 30000)/1000) + ' seconds')
-            }
-        break
-        case prefix +'add joke':
-            newJokeList[msg.author] = new Joke()
-            msg.reply('your next message will be the joke set up. What is the set up? Type cancel to stop adding the joke')
-        break
-        case prefix+'cat picture':
-            if ((Math.floor(Math.random() * 2) + 1) === 1){
-                request('https://api.thecatapi.com/v1/images/search', function (error, response, body){
-                    msg.channel.send('Your cat picture',
-                    {file: JSON.parse(body)[0]['url'] }
-                )
-                })
-            }else{
-                request('https://aws.random.cat/meow', function(error, response, body){
-                    console.log(JSON.parse(body))
-                    msg.channel.send('Your cat picture',
-                    {file: JSON.parse(body)['file'] }
-                    )
-                })
-            }
-        break
-        default:
-
-            if (msg.author in newJokeList){
-                var newJoke = newJokeList[msg.author]
-
-                if(msg.content.toLowerCase() === 'cancel'){
-                    delete newJokeList[msg.author]
-                    msg.reply("joke has been canceled")
-                }else if (!newJoke.setUp){
-
-                    newJoke.setUp = msg.content
-                    msg.reply('your next message will be the joke punchline. What is the punchline?')
-
+                    sleep(5000).then(() =>{ 
+                        msg.channel.send(joke['punchline'])
+                    })
+                    
+                    userTimeList[msg.author] = Date.now()
                 }else{
-
-                    newJoke.punchLine = msg.content
-                    newJoke.addJoke()
-                    delete newJokeList[msg.author]
-                    msg.reply('joke has been added')
-                    writeToFile()
-
+                    msg.author.send('You can get another joke in ' +  - Math.floor(((Date.now() - userTimeList[msg.author]) - 30000)/1000) + ' seconds')
                 }
-            }
-        break
+            break
+            case prefix +'add joke':
+                newJokeList[msg.author] = new Joke()
+                msg.reply('your next message will be the joke set up. What is the set up? Type cancel to stop adding the joke')
+            break
+            case prefix+'cat picture':
+                if ((Math.floor(Math.random() * 2) + 1) === 1){
+                    request('https://api.thecatapi.com/v1/images/search', function (error, response, body){
+                        msg.channel.send('Your cat picture',
+                        {file: JSON.parse(body)[0]['url'] }
+                    )
+                    })
+                }else{
+                    request('https://aws.random.cat/meow', function(error, response, body){
+                        console.log(JSON.parse(body))
+                        msg.channel.send('Your cat picture',
+                        {file: JSON.parse(body)['file'] }
+                        )
+                    })
+                }
+            break
+            default:
+
+                if (msg.author in newJokeList){
+                    var newJoke = newJokeList[msg.author]
+
+                    if(msg.content.toLowerCase() === 'cancel'){
+                        delete newJokeList[msg.author]
+                        msg.reply("joke has been canceled")
+                    }else if (!newJoke.setUp){
+
+                        newJoke.setUp = msg.content
+                        msg.reply('your next message will be the joke punchline. What is the punchline?')
+
+                    }else{
+
+                        newJoke.punchLine = msg.content
+                        newJoke.addJoke()
+                        delete newJokeList[msg.author]
+                        msg.reply('joke has been added')
+                        writeToFile()
+
+                    }
+                }
+            break
+        }
+    }else{
+        if (msg.author.id != '365975655608745985'){
+            queue_of_users.push(msg.author.id)
+        }else if (msg.embeds[0] && !msg.embeds[0].description.includes('Congratulations')) {
+            user = queue_of_users.shift()
+            var message = new Discord.RichEmbed()
+                .setTitle(msg.embeds[0].title)
+                .setDescription(msg.embeds[0].description)
+            client.users.get(user).send(message)
+        }
+        msg.delete()
     }
   })
 
