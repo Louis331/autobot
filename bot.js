@@ -37,7 +37,7 @@ client.on('ready', () => {
             if (msg.content.toLowerCase().startsWith(`${prefix}startmovie`) && !msg.author.bot && msg.member.hasPermission('ADMINISTRATOR')){
                 command = msg.content.split(' ')
                 if (command.length > 2){
-                    msg.channel.send(`@everyone Movie event incoming. Will be watching ${command.slice(2)}. Starting at ${command.slice(1,2)}. Reply to this message to get a movie ticket`)
+                    msg.channel.send(`@everyone Movie event incoming. Will be watching ${command.slice(2).join(' ')}. Starting at ${command.slice(1,2)}. Reply to this message to get a movie ticket`)
                 }else{
                     msg.author.send('Needs to be in format `!startmovie time nameofmovie`')
                 }
