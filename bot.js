@@ -41,7 +41,7 @@ function getCommands() {
         if (jsfile.length <= 0) {
             console.log('No commands found.');
             return;
-        }
+        };
 
         jsfile.forEach((f, i) => {
             let props = require(`./commands/${f}`);
