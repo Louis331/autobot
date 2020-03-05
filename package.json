@@ -4,8 +4,8 @@
     "version": "0.0.0",
     "main": "bot.js",
     "engines": {
-        "node": "8.11.2",
-        "npm": "5.6.0"
+        "node": "12.14.1",
+        "npm": "6.13.4"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "dateformat": "^3.0.3",
-        "discord.js": "11.4.2",
+        "discord.js": "^12.0.1",
         "request": "^2.88.2"
     }
 }

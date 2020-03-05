@@ -1,5 +1,5 @@
 module.exports.run = async (bot, msg) =>{
-    msg.channel.fetchMessages()
+    msg.channel.messages.fetch()
         .then(function(list){
             msg.channel.bulkDelete(list)
         });

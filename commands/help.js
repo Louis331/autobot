@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports.run = async (bot, message, msgArray) => {
     const commands = bot.commands.filter((command) => command.help.description).map((command) => `!${command.help.name}:   ${command.help.description}`);
 
-    const helpEmbed = new Discord.RichEmbed()
+    const helpEmbed = new Discord.MessageEmbed()
         .setColor('#ab34eb')
         .setTitle('Commands List')
         .addField('Commands:', `${commands.join("\n")}`)

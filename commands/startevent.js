@@ -14,30 +14,26 @@ module.exports.run = async (bot, msg, msgContent) =>{
             timeToRun = eventTime - Date.now();
 
             if (timeToRun > 0 && timeToRun < 2147483627){
-                msg.channel.send(`@here ${game} event is incomming. Event will be starting at ${dateFormat(eventTime, "dddd, mmmm dS, yyyy, h:MM:ss TT")}.`);
-
-                channel.fetchMessages({ limit: 1 }).then(messages => {
-                    botMessage = messages.first();
-                })
-
-                setTimeout(function(){
-                    let reactions = botMessage.reactions;
-                    var users = [];
-                    reactions.forEach(function(reaction){
-                        reaction.users.forEach(function(user){
-                            if (!(users.includes(user.id))){
-                                users.push(user.id);
-                                user = msg.guild.members.get(user.id);
-                                user.send(`${game} event is starting now`);
-                            }
-                        })
+                msg.channel.send(`${game} event is incomming. Event will be starting at ${dateFormat(eventTime, "dddd, mmmm dS, yyyy, h:MM:ss TT")}.`).then(function(){
+                    channel.messages.fetch({ limit: 1 }).then(messages => {
+                        botMessage = messages.first();
                     })
-                }, timeToRun)
-
-                setTimeout(function(){
-
-                }, timeToRun+20)
-
+    
+                    setTimeout(function(){
+                        let reactions = botMessage.reactions.cache;
+                        var users = [];
+                        reactions.forEach(function(reaction){
+                            reaction.users.cache.forEach(function(user){
+                                if (!(users.includes(user.id))){
+                                    users.push(user.id);
+                                    user = bot.users.cache.get(user.id)
+                                    user.send(`${game} event is starting now`);
+                                }
+                            })
+                        });
+                        botMessage.delete();
+                    }, timeToRun)
+                });
             } else{
                 msg.author.send('Invalid time');
             }

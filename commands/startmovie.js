@@ -9,7 +9,7 @@ module.exports.run = async (bot, msg, msgContent) =>{
             currentFile = file.readFile(fileLocation);
             currentFile.id = msg.channel.id;
             file.writeFile(fileLocation, currentFile);
-            msg.channel.overwritePermissions(msg.guild.id, {
+            msg.channel.updateOverwrite(msg.guild.id, {
                 SEND_MESSAGES: true
             });
         }else{
