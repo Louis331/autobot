@@ -14,7 +14,7 @@ module.exports.run = async (bot, msg, msgContent) =>{
             timeToRun = eventTime - Date.now();
 
             if (timeToRun > 0 && timeToRun < 2147483627){
-                msg.channel.send(`${game} event is incomming. Event will be starting at ${dateFormat(eventTime, "dddd, mmmm dS, yyyy, h:MM:ss TT")}.`).then(function(){
+                msg.channel.send(`${game} event is incoming. Event will be starting at ${dateFormat(eventTime, "dddd, mmmm dS, yyyy, h:MM:ss TT")}.`).then(function(){
                     channel.messages.fetch({ limit: 1 }).then(messages => {
                         botMessage = messages.first();
                     })
