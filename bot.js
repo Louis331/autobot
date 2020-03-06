@@ -4,6 +4,9 @@ const fileHandle = require('./fileHandler');
 const fileLocation = './movieId.json'
 var fs = require("fs");
 var request = require('request');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
 var prefix = '!';
 
 bot.commands = new Discord.Collection();
@@ -50,5 +53,5 @@ function getCommands() {
         });
     });
 };
-
+console.log(process.env.BOT_TOKEN)
 bot.login(process.env.BOT_TOKEN);
