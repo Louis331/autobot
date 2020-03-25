@@ -1,13 +1,18 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fileHandle = require('./fileHandler');
-const fileLocation = './movieId.json'
+const fileLocation = './config.json'
 var fs = require("fs");
+const db = require('./db.js');
 var request = require('request');
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
   }
 var prefix = '!';
+
+db.fetchAllItems(process.env.CONFIG_TABLE).then(data => {
+    
+})
 
 bot.commands = new Discord.Collection();
 getCommands();
@@ -53,5 +58,4 @@ function getCommands() {
         });
     });
 };
-console.log(process.env.BOT_TOKEN)
 bot.login(process.env.BOT_TOKEN);

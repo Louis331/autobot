@@ -1,4 +1,6 @@
 const db = require('../db.js');
+const file = require('../fileHandler');
+const fileLocation = './config.json'
 class ConfigItem{
     constructor(id, value){
         this.table = process.env.CONFIG_TABLE;
@@ -8,6 +10,7 @@ class ConfigItem{
 
     addToDb(){
         db.addItem(this.table, this.id, {value: this.v});
+        this.writeToFile();
     }
 
     deleteFromDb(){
@@ -16,6 +19,14 @@ class ConfigItem{
 
     updateDb(){
         db.updateItem(this.table, this.id, {value: this.v});
+        this.writeToFile();
+    }
+
+    writeToFile(){
+        console.log('here')
+        let currentFile = file.readFile(fileLocation);
+        currentFile.movieId = this.v;
+        file.writeFile(fileLocation, currentFile); 
     }
 
 }
