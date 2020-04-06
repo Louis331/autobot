@@ -1,8 +1,8 @@
 const admin = require('firebase-admin');
 var db;
 
-module.exports.addItem = function (table, id, object){
-    if (!db){
+module.exports.addItem = function(table, id, object) {
+    if (!db) {
         db = connectToDb();
     }
     let docRef = db.collection(table).doc(id);
@@ -12,22 +12,22 @@ module.exports.addItem = function (table, id, object){
 
 // addItem('config', 'test', {value: 'test'});
 
-module.exports.fetchItem = async function (table, id){
-    if (!db){
+module.exports.fetchItem = async function(table, id) {
+    if (!db) {
         db = connectToDb();
     }
     var data;
     await db.collection(table).get()
-    .then((snapshot) => {
-        snapshot.forEach((doc) => {
-        if (doc.id === id){
-            data = doc.data();
-        }
-        });
-    })
-    .catch((err) => {
-        console.log('Error getting documents', err);
-    })
+        .then((snapshot) => {
+            snapshot.forEach((doc) => {
+                if (doc.id === id) {
+                    data = doc.data();
+                }
+            });
+        })
+        .catch((err) => {
+            console.log('Error getting documents', err);
+        })
     console.log(data['value'])
     return data;
 }
@@ -36,8 +36,8 @@ module.exports.fetchItem = async function (table, id){
 //     console.log(thing);
 // });
 
-module.exports.deleteItem = function (table, id){
-    if (!db){
+module.exports.deleteItem = function(table, id) {
+    if (!db) {
         db = connectToDb();
     }
     db.collection(table).doc(id).delete();
@@ -45,28 +45,28 @@ module.exports.deleteItem = function (table, id){
 
 // deleteItem('config', 'test');
 
-module.exports.updateItem = function(table, id, newValue){
-    if (!db){
+module.exports.updateItem = function(table, id, newValue) {
+    if (!db) {
         db = connectToDb();
     }
     let docRef = db.collection(table).doc(id);
     let updateSingle = docRef.update(newValue);
 }
 
-module.exports.fetchAllItems = async function (table){
-    if (!db){
+module.exports.fetchAllItems = async function(table) {
+    if (!db) {
         db = connectToDb();
     }
     var data = [];
     await db.collection(table).get()
-    .then((snapshot) => {
-        snapshot.forEach((doc) => {
-            data.push(doc);
-        });
-    })
-    .catch((err) => {
-        console.log('Error getting documents', err);
-    })
+        .then((snapshot) => {
+            snapshot.forEach((doc) => {
+                data.push(doc);
+            });
+        })
+        .catch((err) => {
+            console.log('Error getting documents', err);
+        })
     return data;
 }
 
