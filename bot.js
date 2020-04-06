@@ -1,10 +1,21 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fileHandle = require('./fileHandler');
-const fileLocation = './movieId.json'
+const fileLocation = './config.json'
 var fs = require("fs");
+const db = require('./db.js');
 var request = require('request');
-var prefix = '!';
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
+db.fetchAllItems(process.env.CONFIG_TABLE).then(data => {
+    configObject = {}
+    data.forEach((item) => {
+        configObject[item.id] = item.data()['value'];
+    });
+    fileHandle.writeFile(fileLocation, configObject);
+})
 
 bot.commands = new Discord.Collection();
 getCommands();
@@ -14,21 +25,22 @@ bot.on('ready', () => {
 });
 
 bot.on('message', async msg => {
+    var prefix = fileHandle.readFile(fileLocation)['prefix']
     if (msg.author.bot) return;
     let messageContents = msg.content
 
-    if (messageContents.startsWith(prefix)){
+    if (messageContents.startsWith(prefix)) {
         let msgArray = messageContents.toLowerCase().split(' ');
         let cmd = msgArray[0];
         let commandfile = bot.commands.get(cmd.slice(prefix.length));
         if (commandfile && `${prefix}${commandfile.help.name}` === cmd) {
-            commandfile.run(bot, msg, msgArray).catch(function(error){
+            commandfile.run(bot, msg, msgArray).catch(function(error) {
                 console.log(error);
             });
         }
-    }else if (msg.channel.id === fileHandle.readFile(fileLocation).id){
-        var role = msg.guild.roles.find(role => role.name === 'Movie ticket')
-        msg.member.addRole(role);
+    } else if (msg.channel.id === fileHandle.readFile(fileLocation).id) {
+        var role = msg.guild.roles.cache.find(role => role.name === 'Movie ticket')
+        msg.member.roles.add(role);
     }
 });
 
@@ -50,5 +62,4 @@ function getCommands() {
         });
     });
 };
-
 bot.login(process.env.BOT_TOKEN);
