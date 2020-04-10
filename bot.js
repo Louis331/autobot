@@ -38,7 +38,7 @@ bot.on('message', async msg => {
                 console.log(error);
             });
         }
-    } else if (msg.channel.id === fileHandle.readFile(fileLocation).id) {
+    } else if (msg.channel.id === fileHandle.readFile(fileLocation).movieId) {
         var role = msg.guild.roles.cache.find(role => role.name === 'Movie ticket')
         msg.member.roles.add(role);
     }
