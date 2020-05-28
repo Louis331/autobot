@@ -1,8 +1,10 @@
-const ConfigItem = require('./models/ConfigItem');
+require('dotenv').config();
+const movieList = require('./models/MovieList');
 
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-  }
+// movieList.removeMovie('0').then(bol => {
+//   console.log(bol)
+// });
 
-test = new ConfigItem('test2', 'test')
-test.addToDb();
+movieList.getNumberOfMovies().then(movies => {
+  console.log(movies)
+});
