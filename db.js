@@ -5,9 +5,8 @@ module.exports.addItem = function(table, id, object) {
     if (!db) {
         db = connectToDb();
     }
-    let docRef = db.collection(table).doc(id);
 
-    docRef.set(object);
+    db.collection(table).doc(id).set(object);
 }
 
 // addItem('config', 'test', {value: 'test'});
@@ -28,7 +27,6 @@ module.exports.fetchItem = async function(table, id) {
         .catch((err) => {
             console.log('Error getting documents', err);
         })
-    console.log(data['value'])
     return data;
 }
 

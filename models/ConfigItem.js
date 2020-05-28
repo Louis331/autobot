@@ -1,6 +1,7 @@
 const db = require('../db.js');
 const file = require('../fileHandler');
 const fileLocation = './config.json'
+
 class ConfigItem {
     constructor(id, value) {
         this.table = process.env.CONFIG_TABLE;

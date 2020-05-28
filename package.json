@@ -1,7 +1,7 @@
 {
     "name": "discord-api-bot",
-    "description": "Example",
-    "version": "0.1.0",
+    "description": "A discord bot for handeling all sorts",
+    "version": "1.0.0",
     "main": "bot.js",
     "engines": {
         "node": "12.14.1",
