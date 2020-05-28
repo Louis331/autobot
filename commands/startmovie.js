@@ -11,7 +11,7 @@ module.exports.run = async (bot, msg, msgContent) =>{
                 name = msg.content.split(' ').slice(2).join(' ');
             }
 
-            msg.channel.send(`everyone Movie event incoming. Will be watching ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to get a movie ticket`);
+            msg.channel.send(`@everyone Movie event incoming. Will be watching ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to get a movie ticket`);
 
             let movieChannelConfig = new ConfigItem('movieId', 0);
             movieChannelConfig.v = msg.channel.id;
