@@ -1,13 +1,13 @@
 const ConfigItem = require('../models/ConfigItem');
 const movieList = require('../models/MovieList');
 
-module.exports.run = async (bot, msg, msgContent) =>{
-    if (msg.member.hasPermission('ADMINISTRATOR')){
-        if (msgContent.length > 2){
+module.exports.run = async(bot, msg, msgContent) => {
+    if (msg.member.hasPermission('ADMINISTRATOR')) {
+        if (msgContent.length > 2) {
 
-            if (msgContent.length === 3 && msgContent[2] === 'random'){
+            if (msgContent.length === 3 && msgContent[2] === 'random') {
                 name = await movieList.getRandomMovie();
-            } else{
+            } else {
                 name = msg.content.split(' ').slice(2).join(' ');
             }
 

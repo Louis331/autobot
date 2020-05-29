@@ -1,6 +1,3 @@
 node_modules/
-auth.json
-joke.json
-db-key.json
-.env
+config.json
 .env
