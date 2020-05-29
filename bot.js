@@ -4,7 +4,11 @@ const fileHandle = require('./fileHandler');
 const fileLocation = './config.json'
 var fs = require("fs");
 const db = require('./db.js');
-var request = require('request');
+
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser').json();
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -21,7 +25,17 @@ bot.commands = new Discord.Collection();
 getCommands();
 
 bot.on('ready', () => {
-    console.log(`Logged in as ${bot.user.tag}!`)
+    console.log('Bot is alive')
+
+    app.post('/', bodyParser, (req, res) => {
+        let movie = req.body.movie
+        bot.channels.cache.get(fileHandle.readFile(fileLocation)['movieRoom']).send(`${movie} has been added to the list of movies`)
+        return res.send('Recived post');
+    })
+
+    app.listen(process.env.PORT, () => {
+        console.log('Server is running')
+    })
 });
 
 bot.on('message', async msg => {
@@ -62,4 +76,5 @@ function getCommands() {
         });
     });
 };
+
 bot.login(process.env.BOT_TOKEN);
