@@ -33,6 +33,12 @@ bot.on('ready', () => {
         return res.send('Recived post');
     })
 
+    app.get('/', (req, res) => {
+        console.log('bot is awake');
+        bot.channels.cache.get(fileHandle.readFile(fileLocation)['movieRoom']).send(`Bot has been woken`)
+        return res.send('Bot is awoken');
+    })
+
     app.listen(process.env.PORT, () => {
         console.log('Server is running')
     })
