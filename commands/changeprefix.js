@@ -10,7 +10,7 @@ module.exports.run = async(bot, msg, msgContent) => {
             let prefixConfigItem = new ConfigItem('prefix', msgContent.slice(1).join(' '));
             prefixConfigItem.addToDb();
         } else {
-            
+
             msg.author.send('You forgot the new prefix');
         }
     }
@@ -18,5 +18,5 @@ module.exports.run = async(bot, msg, msgContent) => {
 
 module.exports.help = {
     'name': 'changeprefix',
-    'description': 'use to change the prefix'
+    'description': 'admin only. Use to change the prefix'
 }

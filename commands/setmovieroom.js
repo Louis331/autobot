@@ -12,5 +12,5 @@ module.exports.run = async(bot, msg, msgContent) => {
 
 module.exports.help = {
     'name': 'setmovieroom',
-    'description': 'use to set the movie room'
+    'description': 'admin only. use to set the movie room'
 }
