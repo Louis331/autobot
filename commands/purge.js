@@ -1,10 +1,14 @@
-module.exports.run = async (bot, msg) =>{
+module.exports.run = async(bot, msg, msgArray) => {
 
-    msg.channel.messages.fetch()
-    
-        .then(function(list){
-            msg.channel.bulkDelete(list)
-        });
+    if (msg.member.hasPermission('ADMINISTRATOR')) {
+        msgsToDelete = 20;
+        if (msgArray.length > 1) {
+            msgsToDelete = parseInt(msgArray[1]) + 1
+        }
+
+
+        msg.channel.bulkDelete(msgsToDelete)
+    }
 };
 
 module.exports.help = {
