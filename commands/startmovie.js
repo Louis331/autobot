@@ -7,11 +7,12 @@ module.exports.run = async(bot, msg, msgContent) => {
 
             if (msgContent.length === 3 && msgContent[2] === 'random') {
                 name = await movieList.getRandomMovie();
+                name = 'watching' + name
             } else {
                 name = msg.content.split(' ').slice(2).join(' ');
             }
 
-            msg.channel.send(`@everyone Movie event incoming. Will be watching ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to get a movie ticket`);
+            msg.channel.send(`@everyone Event incoming. Will be ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to show interest`);
 
             let movieChannelConfig = new ConfigItem('movieId', 0);
             movieChannelConfig.v = msg.channel.id;
