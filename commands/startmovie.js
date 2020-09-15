@@ -7,7 +7,7 @@ module.exports.run = async(bot, msg, msgContent) => {
 
             if (msgContent.length === 3 && msgContent[2] === 'random') {
                 name = await movieList.getRandomMovie();
-                name = 'watching' + name
+                name = 'watching ' + name
             } else {
                 name = msg.content.split(' ').slice(2).join(' ');
             }
