@@ -35,7 +35,6 @@ bot.on('ready', () => {
 
     app.get('/', (req, res) => {
         console.log('bot is awake');
-        bot.channels.cache.get(fileHandle.readFile(fileLocation)['movieRoom']).send(`Bot has been woken`)
         return res.send('Bot is awoken');
     })
 
