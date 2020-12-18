@@ -12,7 +12,7 @@ module.exports.run = async(bot, msg, msgContent) => {
                 name = msg.content.split(' ').slice(2).join(' ');
             }
 
-            msg.channel.send(`@everyone Event incoming. Will be ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to show interest`);
+            msg.channel.send(`@everyone Event incoming. ${name}. Starting at ${msgContent.slice(1,2)}. Reply to this message to show interest`);
 
             let movieChannelConfig = new ConfigItem('movieId', 0);
             movieChannelConfig.v = msg.channel.id;
@@ -23,7 +23,7 @@ module.exports.run = async(bot, msg, msgContent) => {
             });
 
         } else {
-            msg.author.send('Needs to be in format `!startmovie time nameofmovie`');
+            msg.author.send('Needs to be in format `!startevent time nameofmovie`');
         }
 
         msg.delete();
@@ -32,5 +32,5 @@ module.exports.run = async(bot, msg, msgContent) => {
 
 module.exports.help = {
     'name': 'startmovie',
-    'description': 'admin only. This starts the movie event `startmovie <time> <name>`'
+    'description': 'admin only. This starts the event `startmovie <time> <name>`'
 }
