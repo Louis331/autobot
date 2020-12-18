@@ -31,6 +31,6 @@ module.exports.run = async(bot, msg, msgContent) => {
 }
 
 module.exports.help = {
-    'name': 'startmovie',
-    'description': 'admin only. This starts the event `startmovie <time> <name>`'
+    'name': 'startevent',
+    'description': 'admin only. This starts the event `event <time> <name>`'
 }
