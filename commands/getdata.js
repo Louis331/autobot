@@ -11,7 +11,7 @@ class CodData {
     constructor(data) {
         data = data['br']
         this.wins = `Wins: ${data['wins']}`;
-        this.kdRatio = `KD: ${Math.floor(Number(data['kdRatio'])*100)/100}`;
+        this.kdRatio = `KD: ${Math.floor(Number(data['kdRatio'])*10000)/10000}`;
         this.kills = `Kills: ${data['kills']}`;
         this.downs = `Downs: ${data['downs']}`;
         this.contracts = `Contracts completed: ${data['contracts']}`;
