@@ -4,10 +4,19 @@ const fileHandle = require('./fileHandler');
 const fileLocation = './config.json'
 var fs = require("fs");
 const db = require('./db.js');
+const API = require('call-of-duty-api')();
 
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser').json();
+
+async function login(){
+    try {
+        await API.login(process.env.NAME, process.env.PASSWORD);
+     } catch(Error) {
+         console.log(Error);
+     }
+}
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -20,6 +29,9 @@ db.fetchAllItems(process.env.CONFIG_TABLE).then(data => {
     });
     fileHandle.writeFile(fileLocation, configObject);
 })
+
+login();
+
 
 bot.commands = new Discord.Collection();
 getCommands();
@@ -53,7 +65,7 @@ bot.on('message', async msg => {
         let cmd = msgArray[0];
         let commandfile = bot.commands.get(cmd.slice(prefix.length));
         if (commandfile && `${prefix}${commandfile.help.name}` === cmd) {
-            commandfile.run(bot, msg, msgArray).catch(function(error) {
+            commandfile.run(bot, msg, msgArray, API).catch(function(error) {
                 console.log(error);
             });
         }
