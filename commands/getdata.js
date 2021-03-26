@@ -58,7 +58,7 @@ module.exports.run = async (bot, message, msgArray, API) => {
         // }
 
         if (username == null || platform == null){
-            message.reply('No username or playform. Known platforms are: psn, xbl, battle and acti')
+            message.reply('No username or platform. Known platforms are: psn, xbl, battle and acti')
 
         } else {
             let rawData = await API.MWBattleData(username, platform);
