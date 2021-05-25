@@ -4,7 +4,8 @@ knownUsers = {
     'louis': {'name': 'Louis331#2877', 'platform': 'battle'},
     'joe': {'name': 'JOE#26910', 'platform': 'battle'},
     'harry': {'name': 'Pokepunch#2651', 'platform': 'battle'},
-    'sellars': {'name': 'jsellars97', 'platform': 'psn'}
+    'sellars': {'name': 'jsellars97', 'platform': 'psn'},
+    'callum': {'name': 'sniperfi4585#2457', 'platform': 'battle'}
 }
 
 class CodData {
